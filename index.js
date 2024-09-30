@@ -26,7 +26,12 @@ app.post('/api/customers/register', (req, res) => {
 
     axios.post(apiUrl, body)
         .then(response => {
-            res.status(response.status).json(response.data);
+            if (res.status == 201) {
+                res.status(response.status).json(response.data);
+            } else if (res.status == 400) {
+                res.json({ message: "Email Already registered" });
+            }
+
         })
         .catch(error => {
             console.error('Error:', error || error);
